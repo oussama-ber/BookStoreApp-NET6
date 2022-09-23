@@ -2,6 +2,7 @@
 using BookStoreApp.API.Data;
 using BookStoreApp.API.Models.Author;
 using BookStoreApp.API.Models.Book;
+using BookStoreApp.API.Models.User;
 
 namespace BookStoreApp.API.Configurations
 {
@@ -15,6 +16,7 @@ namespace BookStoreApp.API.Configurations
 
             CreateMap<BookCreateDto, Book>().ReverseMap();
             CreateMap<BookUpdateDto, Book>().ReverseMap();
+
             // here we are converting an entity book to bookReadOnly, in the forMember: when we see authorName we want to this appends
             CreateMap<Book, BookReadOnlyDto>()
                 .ForMember(q => q.AuthorName, d => d.MapFrom( map => $"{map.Author.FirstName} {map.Author.LastName}"))
@@ -24,6 +26,7 @@ namespace BookStoreApp.API.Configurations
                .ForMember(q => q.AuthorName, d => d.MapFrom(map => $"{map.Author.FirstName} {map.Author.LastName}"))
                .ReverseMap();
 
+            CreateMap<ApiUser, UserDto>().ReverseMap();
 
         }
     }

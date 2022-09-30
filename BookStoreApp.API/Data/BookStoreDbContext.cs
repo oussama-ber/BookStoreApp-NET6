@@ -29,7 +29,7 @@ namespace BookStoreApp.API.Data
 
             modelBuilder.Entity<Author>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Bio).HasMaxLength(250);
 
@@ -37,6 +37,10 @@ namespace BookStoreApp.API.Data
 
                 entity.Property(e => e.LastName).HasMaxLength(50);
             });
+
+            modelBuilder.Entity<Author>().HasKey(e => e.Id);
+
+
 
             modelBuilder.Entity<Book>(entity =>
             {

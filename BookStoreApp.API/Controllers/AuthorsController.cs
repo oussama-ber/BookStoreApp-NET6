@@ -53,7 +53,7 @@ namespace BookStoreApp.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<AuthorReadOnlyDto>> GetAuthor(int id)
         {
-            throw new Exception("Test");
+            //throw new Exception("Test");
             try
             {
                 var author = await _context.Authors.FindAsync(id);
@@ -77,7 +77,7 @@ namespace BookStoreApp.API.Controllers
         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutAuthor(int id, AuthorUpdateDto authorDto)
         {
             if (id != authorDto.Id)
@@ -122,25 +122,25 @@ namespace BookStoreApp.API.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AuthorCreateDto>> PostAuthor(AuthorCreateDto authorDto)
         {
-            // instead of using this method we ll use the mapper (for cleaner code)
-            //var author = new Author
-            //{
-            //    Bio = authorDto.Bio,
-            //    FirstName = authorDto.FristName,
-            //    LastName = authorDto.LastName
+            //var author = mapper.Map<Author>(authorDto);
+            var author = new Author
+            {
+                Bio = authorDto.Bio,
+                FirstName = authorDto.FirstName,
+                LastName = authorDto.LastName
+            };
 
-            //};
             try
             {
-                var author = mapper.Map<Author>(authorDto);
+                author.Id = 6; 
                 await _context.Authors.AddAsync(author);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
+                return CreatedAtAction(nameof(GetAuthor), new { id = author.Id }, author);
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
-
+                Console.WriteLine($"this is bug the author id is {author.Id}");
                 logger.LogError(ex, $"Error Perfoming POST in {nameof(PostAuthor)}", authorDto);
                 return StatusCode(500, Messages.Error500Message);
             }

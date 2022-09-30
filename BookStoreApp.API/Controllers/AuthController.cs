@@ -51,7 +51,7 @@ namespace BookStoreApp.API.Controllers
                     }
                     return BadRequest(ModelState);
                 }
-                await userManager.AddToRoleAsync(user, "User");
+                await userManager.AddToRoleAsync(user, "Administrator");
                 return Accepted();
             }
             catch (Exception ex)

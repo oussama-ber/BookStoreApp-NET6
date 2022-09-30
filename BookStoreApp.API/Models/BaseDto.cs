@@ -1,7 +1,10 @@
-﻿namespace BookStoreApp.API.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookStoreApp.API.Models
 {
     public abstract class BaseDto
     {
+        
         public int Id { get; set; }
     }
 }

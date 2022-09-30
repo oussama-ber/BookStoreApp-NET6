@@ -17,7 +17,7 @@ namespace BookStoreApp.Blazor.Server.UI.Services.Base
 {
     using System = global::System;
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.17.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "")]
     public partial interface IClient
     {
         /// <returns>Success</returns>
@@ -139,7 +139,7 @@ namespace BookStoreApp.Blazor.Server.UI.Services.Base
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.17.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "")]
     public partial class Client : IClient
     {
         private System.Net.Http.HttpClient _httpClient;
@@ -439,7 +439,7 @@ namespace BookStoreApp.Blazor.Server.UI.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ >= 200 && status_ <= 299)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<AuthorCreateDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)

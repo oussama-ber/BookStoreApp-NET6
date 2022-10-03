@@ -1,11 +1,10 @@
-﻿@page "/authors/create/"
-
+﻿@page "/authors/update/{id:int}"
 @inject IAuthorService authorService
 @inject NavigationManager navManager
 @attribute [Authorize(Roles = Roles.Administrator)]
+<h3>Update Author</h3>
 
-<h3>Create New Author</h3>
-<EditForm Model="Author" OnValidSubmit="HandleCreateAuthor">
+<EditForm Model="Author" OnValidSubmit="HandleUpdateAuthor">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -14,7 +13,7 @@
         <InputText @bind-Value="Author.FirstName" class="form-control" id="firstname" />
         <ValidationMessage For="@(()=>Author.FirstName)" />
     </div>
-    <br />
+    <br/>
     <div class="form-group">
         <label for="lastName"> Last Name </label>
         <InputText @bind-Value="Author.LastName" class="form-control" id="lastName" />
@@ -29,7 +28,7 @@
     <br />
     <button class="btn btn-primary" type="submit">
         <span class="oi oi-pencil"></span>
-        Create Author
+        Update Author
     </button>
 
     <button @onclick="BackToList" class="btn btn-outline-secondary">
@@ -39,29 +38,31 @@
 </EditForm>
 
 @code {
-    private AuthorCreateDto Author = new AuthorCreateDto();
 
-    private async Task HandleCreateAuthor()
+    [Parameter]
+    public int id { get; set; }
+    //fetch the author
+    protected async override Task OnInitializedAsync()
     {
-        try
+        var response = await authorService.GetAuthorForUpdate(id);
+        if (response.Success)
         {
-            await authorService.CreateAuthor(Author);
+            Author = response.Data; 
         }
-        catch (Exception)
+    }
+
+    private AuthorUpdateDto Author = new AuthorUpdateDto();
+
+    private async Task HandleUpdateAuthor()
+    {
+        var response = await authorService.UpdateAuthor(id, Author);
+        if (response.Success)
         {
-
-            throw;
+            BackToList();
         }
-        BackToList();
-
-
-
-
-
     }
     private void BackToList()
     {
-        Console.WriteLine("inside the backtolist method. ");
         navManager.NavigateTo("/authors/");
     }
 }

@@ -10,6 +10,7 @@ using BookStoreApp.API.Models.Author;
 using AutoMapper;
 using BookStoreApp.API.Static;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper.QueryableExtensions;
 
 namespace BookStoreApp.API.Controllers
 {
@@ -51,20 +52,23 @@ namespace BookStoreApp.API.Controllers
 
         // GET: api/Authors/5 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AuthorReadOnlyDto>> GetAuthor(int id)
+        public async Task<ActionResult<AuthorDetailsDto>> GetAuthor(int id)
         {
             //throw new Exception("Test");
             try
             {
-                var author = await _context.Authors.FindAsync(id);
+                var author = await _context.Authors
+                    .Include(q => q.Books)
+                    .ProjectTo<AuthorDetailsDto>(mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(q => q.Id == id);
 
                 if (author == null)
                 {
                     logger.LogWarning($"Record Not Found {nameof(GetAuthor)} - ID {id}");
                     return NotFound();
                 }
-                var authorDto = mapper.Map<AuthorReadOnlyDto>(author);
-                return authorDto;
+
+                return Ok(author);
             }
             catch (Exception ex)
             {
@@ -77,7 +81,7 @@ namespace BookStoreApp.API.Controllers
         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutAuthor(int id, AuthorUpdateDto authorDto)
         {
             if (id != authorDto.Id)
@@ -132,7 +136,7 @@ namespace BookStoreApp.API.Controllers
 
             try
             {
-                author.Id = 6; 
+                //author.Id = 6; 
                 await _context.Authors.AddAsync(author);
                 await _context.SaveChangesAsync();
 
@@ -140,7 +144,7 @@ namespace BookStoreApp.API.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"this is bug the author id is {author.Id}");
+                Console.WriteLine(ex.Message);
                 logger.LogError(ex, $"Error Perfoming POST in {nameof(PostAuthor)}", authorDto);
                 return StatusCode(500, Messages.Error500Message);
             }

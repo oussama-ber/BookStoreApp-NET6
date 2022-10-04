@@ -47,9 +47,10 @@ namespace BookStoreApp.API.Data
                 entity.HasIndex(e => e.Isbn, "UQ__Books__447D36EA1C8CFC35")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+               
 
-                entity.Property(e => e.Image).HasMaxLength(50);
+                entity.Property(e => e.Image).HasMaxLength(250);
 
                 entity.Property(e => e.Isbn)
                     .HasMaxLength(50)
@@ -66,6 +67,7 @@ namespace BookStoreApp.API.Data
                     .HasForeignKey(d => d.AuthorId)
                     .HasConstraintName("FK_Books_ToTable");
             });
+            modelBuilder.Entity<Book>().HasKey(e => e.Id);
 
             // to set things by default.
             modelBuilder.Entity<IdentityRole>().HasData(

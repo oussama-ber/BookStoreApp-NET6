@@ -4,6 +4,7 @@ using BookStoreApp.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStoreApp.API.Migrations
 {
     [DbContext(typeof(BookStoreDbContext))]
-    partial class BookStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221003200813_try_fix_book_id")]
+    partial class try_fix_book_id
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,7 +101,7 @@ namespace BookStoreApp.API.Migrations
                         {
                             Id = "28abad97-e736-4145-bc4d-fb98958e1704",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef1eaccc-3b1c-4aad-93ef-cd064715986b",
+                            ConcurrencyStamp = "230903e8-e054-4ac0-8b37-23fa69cba19b",
                             Email = "admin@bookstore.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -107,9 +109,9 @@ namespace BookStoreApp.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@BOOKSTORE.COM",
                             NormalizedUserName = "ADMIN@BOOKSTORE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENzflSI+82Fa0HxegSo9kIijoMDAw6iXPiCAGEqDCQ3JFICaWLinBwJK5TPrmIl/9Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMR7lugP7X+mapkBnhICO8xuy2ji2eqcwHd3mfsTBtaZvihc1dCQ805w6cJq2A9Dzw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8ed190c0-c35e-4b75-a5db-5549110d7b86",
+                            SecurityStamp = "26c19753-2158-450c-897e-7bb040fba882",
                             TwoFactorEnabled = false,
                             UserName = "admin@bookstore.com"
                         },
@@ -117,7 +119,7 @@ namespace BookStoreApp.API.Migrations
                         {
                             Id = "0589e81b-acb0-46cc-9c6f-5549d07d9304",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "45eb8500-c003-43b7-ac19-14d00b267092",
+                            ConcurrencyStamp = "a7a581ba-9183-4d05-ac8c-d12dda4a1f68",
                             Email = "user@bookstore.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -125,9 +127,9 @@ namespace BookStoreApp.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@BOOKSTORE.COM",
                             NormalizedUserName = "USER@BOOKSTORE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN2IGh6IzWG6pRZsiooUREijSn2nmVi8zIRgWArtQzbkiAv0Vup8GFcLJ9gyHuZDMw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHgHFSrRlDxO0rjQMNBOsosIu9ACq/Y/TzRSxnuqIRhVFLbvoy0Ca/HQP0o1f/akpQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b8c9c378-96d7-4a6d-9e75-b3e112c043c8",
+                            SecurityStamp = "57c0f162-9c5d-4c89-b370-479b7c7c3065",
                             TwoFactorEnabled = false,
                             UserName = "user@bookstore.com"
                         });
@@ -161,10 +163,7 @@ namespace BookStoreApp.API.Migrations
             modelBuilder.Entity("BookStoreApp.API.Data.Book", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("AuthorId")
                         .HasColumnType("int");
@@ -233,14 +232,14 @@ namespace BookStoreApp.API.Migrations
                         new
                         {
                             Id = "6449c5cb-98bc-470e-9925-aaaa3b4b9eb0",
-                            ConcurrencyStamp = "498dc903-bfb5-4513-9406-d9ad30d86dad",
+                            ConcurrencyStamp = "1f553d75-9438-41a0-b49d-9cfd889f278a",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "27c98c9f-39c3-48a3-8508-4867f55438ae",
-                            ConcurrencyStamp = "7734e179-0849-440c-975a-5e8a02f406e5",
+                            ConcurrencyStamp = "2ca1a2c8-c2e2-4529-92d5-527a46a46258",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
